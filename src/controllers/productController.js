@@ -1,12 +1,71 @@
+import { createProductService,deleteProductByIdService,getAllProductService,updateProductByIdService } from "../Services/ProductService.js";
 
 export const createProductController = async (req, res) => {
 
     try {
-        console.log("req.body",req.body)
+        const data = req.body;
+        const newProduct = await createProductService(data)
+        if(newProduct.quantity == 0){
+            newProduct.status = "out-of-stock"
+        }
+        res.send({
+            success: true,
+            message: "Saved Product",
+            data: newProduct
+        })
     } catch (e) {
         console.log(e)
         return res.json({
             status: 'err',
+        })
+    }
+}
+
+export const getProductController = async(req, res)=>{
+    try {
+        const products = await getAllProductService();
+        res.send({
+            success: true,
+            message: "Products",
+            data: products
+        })
+    } catch (error) {
+        res.send({
+            success: false,
+            message: error.message
+        })
+    }
+}
+export const updateProductController = async(req, res)=>{
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const product = await updateProductByIdService(id, data);
+        res.send({
+            success: true,
+            message: "Updated Product",
+            data: product
+        })
+    } catch (error) {
+        res.send({
+            success: false,
+            message: error.message
+        })
+    }
+}
+export const deleteProductController = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const product = await deleteProductByIdService(id);
+        res.send({
+            success: true,
+            message: "Deleted Product",
+            data: product
+        })
+    } catch (error) {
+        res.send({
+            success: false,
+            message: error.message
         })
     }
 }
