@@ -3,8 +3,11 @@ const {Schema} = mongoose;
 
 const productSchema = new Schema({
     name:{
-        type : String,
-        require: true,
+        type: String,
+        required: true,
+        trim: true,
+        unique: true,
+        minLength: 3
     },
     image:{
         type : String,
@@ -12,27 +15,37 @@ const productSchema = new Schema({
         default: 'http://d38pfw3nc1vjg3.cloudfront.net/picture/undefined/1649667845682_1134204.png',
     },
     rating:{
-        type : String,
-        require: true,
-        unique:true,
-    },
-    price:{
         type : Number,
         require: true,
-        unique:true,
     },
-    description  :{
-        type : String,
-        require: true,
+    description: {
+        type: Array,
+        required: true,
+        trim: true,
     },
-    reviewRating:{
-        type : String,
-        require: true,
+    price: {
+        type: Number,
+        required: true,
+        trim: true,
+        min: 0
     },
-    categories: {
+    quantity: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    category: {
         type: String,
-        required: [true, '404'],
+        required: true,
+        trim: true,
+    },
+    status: {
+        type: String,
+        enum: ['in-stock', 'out-of-stock', 'discontinued'],
+        required: true,
     },
 
+},{
+    timestamps: true
 });
 export const Product = mongoose.model('Product', productSchema);
