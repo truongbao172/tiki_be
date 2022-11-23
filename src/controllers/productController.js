@@ -1,4 +1,4 @@
-import { createProductService,deleteProductByIdService,getAllProductService,updateProductByIdService } from "../Services/ProductService.js";
+import { createProductService,deleteProductByIdService,getAllProductService,getDetailsProductService,updateProductByIdService } from "../Services/ProductService.js";
 
 export const createProductController = async (req, res) => {
 
@@ -14,6 +14,24 @@ export const createProductController = async (req, res) => {
             data: newProduct
         })
     } catch (e) {
+        console.log(e)
+        return res.json({
+            status: 'err',
+        })
+    }
+}
+export const detailsProductController = async (req, res) => {
+    try{
+        const { productId } = req.params
+        if(productId) {
+            const response = await getDetailsProductService(productId)
+            return res.json(response)
+        }
+        return res.json({
+            status: 'err',
+            message: 'The id is required'
+        })
+    }catch(e){
         console.log(e)
         return res.json({
             status: 'err',
