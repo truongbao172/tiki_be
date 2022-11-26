@@ -29,15 +29,21 @@ const productSchema = new Schema({
         trim: true,
         min: 0
     },
-    quantity: {
+    quatity: {
         type: Number,
         required: true,
         min: 0
     },
     category: {
-        type: String,
-        required: true,
-        trim: true,
+        Ids:{
+            type: String,
+            required: true,
+        },
+        name:{
+            type: String,
+            required: true,
+            trim: true,
+        }
     },
     status: {
         type: String,

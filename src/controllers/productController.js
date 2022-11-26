@@ -93,7 +93,7 @@ export const deleteProductController = async(req, res, next) => {
 //     "rating": 4,
 //     "description":["5x larger flame than traditional torches","Easy install lever provides one-step installation","For proven mosquito repellency*, use with BiteFighter® Torch Fuel"],
 //     "price": 20000,
-//     "quantity": 78,
-//     "category":"TORCHES & TABLETOP",
+//     "quatity": 78,
+//     "category":{ "cateId": "TORCHES & TABLETOP", "cateName" : "torches"},
 //     "status":"in-stock"
 //   }
