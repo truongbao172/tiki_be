@@ -3,9 +3,9 @@ import  {engine }  from 'express-handlebars';
 import routes from './routes/index.js';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv'
-
+import cors from "cors";
 var app = express();
-
+app.use(cors())
 dotenv.config()
 app.use(express.json())
 
@@ -19,7 +19,6 @@ console.log("port", process.env.PORT)
 app.get('/', (req, res) => {
    res.render('new',{isShow:true});
 });
-
 
 routes(app)
 mongoose.connect(process.env.MONGO_DB)

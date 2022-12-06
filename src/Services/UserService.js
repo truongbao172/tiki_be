@@ -59,7 +59,7 @@ export const loginUserService = ({ email, password}) => {
             const isEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)
             if(isEmail){
                 const useDb = await User.find({email: email})
-                if(useDb) {
+                if(useDb.length !== 0) {
                     const checkPassword = bcrypt.compareSync(password, useDb[0].password);
                     if(checkPassword){
                         const access_token = generalAcessToken({ isAdmin: useDb[0].isAdmin, _id: useDb[0]._id })
