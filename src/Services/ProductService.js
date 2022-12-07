@@ -9,7 +9,7 @@ export const getAllProductService = () =>{
         try{
             const allProduct = await Product.find()
             resolve({
-                status: 'Ok',
+                status: 'OK',
                 data: allProduct
             })
         }catch(e){

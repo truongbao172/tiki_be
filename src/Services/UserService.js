@@ -68,7 +68,10 @@ export const loginUserService = ({ email, password}) => {
                             status: 'OK',
                             data: {
                                 access_token,
-                                refresh_token
+                                refresh_token,
+                                name : useDb[0].name,
+                                isAdmin : useDb[0].isAdmin,
+                                email: useDb[0].email
                             }
                         })
                     }
