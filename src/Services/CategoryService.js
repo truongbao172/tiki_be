@@ -9,7 +9,7 @@ export const getAllCategoryService = () =>{
         try{
             const allCategory = await Category.find()
             resolve({
-                status: 'Ok',
+                status: 'OK',
                 data: allCategory
             })
         }catch(e){

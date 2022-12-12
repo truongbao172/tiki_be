@@ -29,7 +29,7 @@ router.get('/:userId', detailsUserController)
 
 router.post('/login', loginUserController)
 
-router.post('/', createUserController)
+router.post('/', createUserController ) 
 
 router.get('/', userController)
 

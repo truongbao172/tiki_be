@@ -1,8 +1,8 @@
-import { 
-    createUserService, 
-    loginUserService, 
-    getDetailsUserService, 
-    searchUserService, 
+import {
+    createUserService,
+    loginUserService,
+    getDetailsUserService,
+    searchUserService,
     updateUserService,
     deleteUserService,
     getAllUserService,
@@ -15,9 +15,9 @@ export const userController = (req, res) => {
 }
 
 export const detailsUserController = async (req, res) => {
-    try{
+    try {
         const { userId } = req.params
-        if(userId) {
+        if (userId) {
             const response = await getDetailsUserService(userId)
             return res.json(response)
         }
@@ -25,7 +25,7 @@ export const detailsUserController = async (req, res) => {
             status: 'err',
             message: 'The id is required'
         })
-    }catch(e){
+    } catch (e) {
         console.log(e)
         return res.json({
             status: 'err',
@@ -34,18 +34,18 @@ export const detailsUserController = async (req, res) => {
 }
 
 export const searchUserController = async (req, res) => {
-    try{
+    try {
         const { name } = req.query
-        if(name){
+        if (name) {
             const response = await searchUserService(name)
             return res.json(response)
-        }else {
+        } else {
             return res.json({
                 status: 'err',
                 message: 'The name is required'
             })
         }
-    }catch(err){
+    } catch (err) {
         console.log(err)
         return res.json({
             status: 'err',
@@ -54,18 +54,18 @@ export const searchUserController = async (req, res) => {
     }
 }
 
-export const userRefreshTokenController = async(req, res) => {
-    try{
+export const userRefreshTokenController = async (req, res) => {
+    try {
         const refreshTolken = req.headers.token.split(' ')[1]
-        if(refreshTolken){
+        if (refreshTolken) {
             const response = await refreshTokenService(refreshTolken)
             return res.json(response)
-        }else {
+        } else {
             return res.json({
                 message: 'The refreshTolken is not valid'
             })
         }
-    }catch(err){
+    } catch (err) {
         return res.json({
             status: 'err',
             message: err
@@ -80,24 +80,34 @@ export const userRefreshTokenController = async(req, res) => {
 //4 se tra slient user da tao
 
 export const createUserController = async (req, res) => {
-    const { email, password, name } = req.body
-    if(email && password && name){
-        const response = await createUserService({ email, password, name })
-        return res.json(response)
-    }else {
+
+    try {
+        const { email, password, desDetail } = req.body
+        console.log("req.body", req.body)
+        if (email && password && desDetail) {
+            const response = await createUserService({ email, password, desDetail })
+            return res.json(response)
+        } else {
+            return res.json({
+                status: 'err',
+                messgae: "The email, password and name is required"
+            })
+        }
+    } catch (error) {
+        console.log(error)
         return res.json({
-            status: 'err',
-            messgae: "The email, password and name is required"
+            message: error,
+            status: 'err'
         })
     }
 }
 
 export const loginUserController = async (req, res) => {
     const { email, password } = req.body
-    if(email && password){
+    if (email && password) {
         const response = await loginUserService({ email, password })
         return res.json(response)
-    }else {
+    } else {
         return res.json({
             status: 'err',
             messgae: "The email and password is required"
@@ -106,26 +116,26 @@ export const loginUserController = async (req, res) => {
 }
 
 export const updateUserController = async (req, res) => {
-    try{
+    try {
         const { id } = req.params
         const data = req.body
-        if(id) {
+        if (id) {
             const response = await updateUserService(id, data)
-            if(response){
+            if (response) {
                 return res.json(response)
-            }else {
+            } else {
                 return res.json({
                     status: 'err',
                     messgae: 'The server is problem'
                 })
             }
-        }else {
+        } else {
             return res.json({
                 status: 'err',
                 messgae: 'The id of user is required'
             })
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
         return res.json({
             message: e,
@@ -137,10 +147,10 @@ export const updateUserController = async (req, res) => {
 export const deleteUserController = async (req, res) => {
     try {
         const _id = req.params.id
-        if(_id){
+        if (_id) {
             const response = await deleteUserService(_id)
             return res.status(200).json(response)
-        }else {
+        } else {
             return res.status(404).json({
                 status: 'err',
                 message: 'The userId is required'
@@ -155,13 +165,13 @@ export const deleteUserController = async (req, res) => {
 }
 
 export const getAllUserController = async (req, res) => {
-    try{
+    try {
         const response = await getAllUserService()
         return res.status(200).json({
             data: response,
             status: 'OK'
         })
-    }catch(e){
+    } catch (e) {
         return res.status(400).json({
             message: e,
             status: 'err'
@@ -169,7 +179,7 @@ export const getAllUserController = async (req, res) => {
     }
 }
 
-export const deleteAllUserController = async(req, res) => {
+export const deleteAllUserController = async (req, res) => {
     const { id } = req.query
     try {
         const response = await deleteAllUserService(id)

@@ -11,11 +11,6 @@ const userSchema = new Schema({
         type: String,
         require : true,
     },
-    name: {
-        type: String,
-        require : true,
-        unique: true
-    },
     access_token: {
         type: String,
         unique: true,
@@ -29,6 +24,65 @@ const userSchema = new Schema({
         type: Boolean,
         unique: true,
         default: false
+    },
+    desDetail: {
+        firtName: {
+            type: String,
+           
+        },
+        lastName: {
+            type: String,
+         
+        },
+        birthDay: {
+            type: String,
+          
+        },
+        gender: {
+            type: String,
+        
+        },
+        householdSize: {
+            type: String,
+          
+        },
+        whichOfHousehold: {
+            type: Array,
+        
+        },
+        rentOrOwn:{
+            type: String,
+          
+        },
+        interests:{
+            type: Array,
+        
+        },
+        yourStyle:{
+            type: Array,
+        
+        },
+        torchesOnYear:{
+            type: String,
+            
+        },
+        useTheTorchesOnYear: {
+            type: String,
+         
+        },
+        youRelate : {
+            type: Array,
+          
+        },
+        infoOutdoor : {
+            type: Array,
+         
+        },
+        listSomeOfYourFavorite:{
+            type: String,
+
+        }
+        
     }
 }, {
     timestamps: true

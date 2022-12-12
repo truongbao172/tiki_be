@@ -2,32 +2,31 @@ import { User } from "../models/UserModel.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-export const createUserService = ({ email, name, password}) => {
+export const createUserService = ({ email, desDetail, password}) => {
     return new Promise(async (resolve, reject) => {
         try {
             const isEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)
             if(isEmail){
-                const isCheckEmail = await User.find({email: email})
-                const isCheckName = await User.find({name})
-                if(isCheckEmail.length || isCheckName.length){
+                const isCheckEmail = await User.findOne({email: email})
+                // const isCheckName = await User.find({name})
+                if(isCheckEmail){
                     resolve({
                         status: 'err',
-                        message: 'The name or user name is existed'
+                        message: 'The user name is existed'  
                     })
                 }
                 const hashPassword = bcrypt.hashSync(password, 10);
                 const newUser = await User.create({
                     email,
-                    name,
+                    desDetail,
                     password : hashPassword
                 })
-                resolve({
-                    status: 'OK',
-                    data: {
-                        email: newUser.email,
-                        name: newUser.name
-                    }
-                })
+                if(newUser){
+                    resolve({
+                        status: 'OK',
+                        data: newUser
+                    })
+                }
             }else {
                 resolve({
                     status: 'err',
@@ -68,10 +67,9 @@ export const loginUserService = ({ email, password}) => {
                             status: 'OK',
                             data: {
                                 access_token,
-                                refresh_token,
-                                name : useDb[0].name,
                                 isAdmin : useDb[0].isAdmin,
-                                email: useDb[0].email
+                                email: useDb[0].email,
+                                desDetail : useDb[0].desDetail
                             }
                         })
                     }
