@@ -10,11 +10,15 @@ const productSchema = new Schema({
         minLength: 3
     },
     image:{
-        type : String,
+        type : Array,
         require: true,
-        default: 'http://d38pfw3nc1vjg3.cloudfront.net/picture/undefined/1649667845682_1134204.png',
+        default: ['http://d38pfw3nc1vjg3.cloudfront.net/picture/undefined/1649667845682_1134204.png','http://d38pfw3nc1vjg3.cloudfront.net/picture/undefined/1649667845682_1134204.png'],
     },
     rating:{
+        type : Number,
+        require: true,
+    },
+    countReview:{
         type : Number,
         require: true,
     },
@@ -22,6 +26,9 @@ const productSchema = new Schema({
         type: Array,
         required: true,
         trim: true,
+    },
+    code:{
+        type: String,
     },
     price: {
         type: Number,

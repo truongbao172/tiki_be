@@ -5,7 +5,7 @@ export const createProductController = async (req, res) => {
     try {
         const data = req.body;
         const newProduct = await createProductService(data)
-        if(newProduct.quantity == 0){
+        if(newProduct.quantity === 0){
             newProduct.status = "out-of-stock"
         }
         res.send({
